@@ -1,20 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { setStatusBarStyle } from "expo-status-bar";
+import * as SplashScreen from "expo-splash-screen";
+import LoadAssets, { COLORS } from "./config";
+import StackNavigator from "./navigation/StackNavigator";
+import {
+  setPositionAsync,
+  setBackgroundColorAsync,
+  setButtonStyleAsync,
+} from "expo-navigation-bar";
+
+setStatusBarStyle("dark");
+setPositionAsync("absolute");
+setBackgroundColorAsync("rgba(255,255,255,0.1)");
+setButtonStyleAsync("dark");
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <LoadAssets>
+      <StackNavigator />
+    </LoadAssets>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
