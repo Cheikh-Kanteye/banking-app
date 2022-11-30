@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { COLORS, FONTS, SIZES } from "../../config";
 import { Button } from "../../components";
 import { AuthStackParamList } from "../../type";
+import { IMAGES } from "../../assets";
 
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "Onboarding">;
@@ -12,6 +13,11 @@ interface Props {
 const Onbarding = ({ navigation }: Props) => {
   return (
     <View style={styles.container}>
+      <Image
+        source={IMAGES.dollard}
+        style={styles.dollardSign}
+        resizeMode="repeat"
+      />
       <Text style={[FONTS.h2, styles.h2]}>
         Have an amazing experience with SmartPay right now!
       </Text>
@@ -35,4 +41,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: SIZES.l,
   },
   h2: { color: COLORS.white, padding: SIZES.m, textAlign: "center" },
+  dollardSign: {
+    position: "absolute",
+    width: SIZES.w,
+    height: SIZES.h,
+    tintColor: COLORS.white,
+    opacity: 0.2,
+    transform: [{ rotate: "45deg" }],
+    top: -SIZES.w / 3,
+    left: -SIZES.w / 3,
+  },
 });

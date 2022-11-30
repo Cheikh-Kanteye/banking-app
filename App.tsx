@@ -8,9 +8,9 @@ import {
   setButtonStyleAsync,
 } from "expo-navigation-bar";
 
-setStatusBarStyle("dark");
+setStatusBarStyle("light");
 setPositionAsync("absolute");
-setBackgroundColorAsync("rgba(255,255,255,0.1)");
+setBackgroundColorAsync("rgba(0,0,0,0.1)");
 setButtonStyleAsync("dark");
 SplashScreen.preventAutoHideAsync();
 

@@ -6,12 +6,18 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { COLORS, FONTS, SIZES } from "../../config";
 import { IMAGES } from "../../assets";
 import { Button } from "../../components";
+import { AuthStackParamList } from "../../type";
 
-const AuthMethod = () => {
+interface Props {
+  navigation: StackNavigationProp<AuthStackParamList, "AuthMethod">;
+}
+
+const AuthMethod = ({ navigation }: Props) => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -48,11 +54,15 @@ const AuthMethod = () => {
         <View style={styles.separator} />
         <Text style={FONTS.h5}>Or</Text>
         <View style={styles.separator} />
-        <Button primary label="Sign in with password" onPress={() => null} />
+        <Button
+          primary
+          label="Sign in with password"
+          onPress={() => navigation.navigate("SignIn")}
+        />
         <View style={styles.separator} />
         <View style={styles.outlineBtnC}>
           <Text style={FONTS.span}>Don't have an account?</Text>
-          <TouchableOpacity onPress={() => null}>
+          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
             <Text style={[FONTS.h6, { color: COLORS.darkest }]}>Sign up</Text>
           </TouchableOpacity>
         </View>
