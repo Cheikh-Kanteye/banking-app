@@ -74,7 +74,7 @@ const Button = ({
           {
             backgroundColor: bg,
             borderWidth: border,
-            borderColor: icon ? COLORS.black : COLORS.darkest,
+            borderColor: icon ? COLORS.grey : COLORS.darkest,
             borderRadius: icon ? SIZES.s / 2 : SIZES.m,
           },
         ]}

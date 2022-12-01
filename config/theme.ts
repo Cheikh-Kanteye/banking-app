@@ -59,6 +59,10 @@ export const FONTS = StyleSheet.create({
     lineHeight: 24,
     fontFamily: "Inter-Regular",
   },
+  thin: {
+    fontSize: 12,
+    lineHeight: 18,
+  },
 });
 
 const { width, height } = Dimensions.get("window");
