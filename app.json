@@ -18,16 +18,26 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true 
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
+        "googleServicesFile": "./google-services.json",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.cheikhkante.bankingapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "@react-native-google-signin/google-signin"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "5cada499-640b-4b75-864c-6165657d6fbe"
+      }
     }
   }
 }

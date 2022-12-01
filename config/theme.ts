@@ -8,6 +8,8 @@ export const COLORS = {
   lightest: "#e7e7ff",
   white: "#ffffff",
   black: "#000000",
+  greyish: "#dbdbdb",
+  grey: "#adb0b2",
 };
 
 export const FONTS = StyleSheet.create({

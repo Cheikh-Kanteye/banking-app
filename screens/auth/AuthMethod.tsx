@@ -6,8 +6,9 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+
 import { StackNavigationProp } from "@react-navigation/stack";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { COLORS, FONTS, SIZES } from "../../config";
 import { IMAGES } from "../../assets";
 import { Button } from "../../components";
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
   h1: { color: COLORS.black, width: "100%", textAlign: "center" },
   image: {
     height: SIZES.h * 0.3,
-    width: SIZES.w - SIZES.xl,
+    width: SIZES.w - SIZES.l,
     marginVertical: SIZES.m,
   },
   separator: { height: SIZES.m / 2 },

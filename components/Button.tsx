@@ -2,20 +2,24 @@ import {
   StyleSheet,
   Text,
   View,
-  Pressable,
+  // TouchableOpacity,
   ImageSourcePropType,
   Image,
+  StyleProp,
+  ViewStyle,
 } from "react-native";
 import React from "react";
 import { COLORS, FONTS, SIZES } from "../config";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface Props {
-  label: string;
+  label?: string;
   primary?: boolean;
   secondary?: boolean;
   disabled?: boolean;
   outline?: boolean;
   icon?: ImageSourcePropType;
+  style?: StyleProp<ViewStyle>;
   onPress: () => void;
 }
 
@@ -26,6 +30,7 @@ const Button = ({
   disabled,
   outline,
   icon,
+  style,
   onPress,
 }: Props) => {
   const defaultBg = primary
@@ -56,10 +61,16 @@ const Button = ({
   };
 
   return (
-    <Pressable onPressIn={onPressIn} onPress={onPress} onPressOut={onPressOut}>
+    <TouchableOpacity
+      activeOpacity={1}
+      onPressIn={onPressIn}
+      onPress={onPress}
+      onPressOut={onPressOut}
+    >
       <View
         style={[
           styles.btn,
+          style,
           {
             backgroundColor: bg,
             borderWidth: border,
@@ -71,20 +82,26 @@ const Button = ({
         {icon && (
           <Image
             source={icon}
-            style={{ width: 20, height: 20, marginRight: SIZES.s / 2 }}
+            style={{
+              width: 20,
+              height: 20,
+              marginRight: label ? SIZES.s / 2 : 0,
+            }}
             resizeMode="contain"
           />
         )}
-        <Text
-          style={[
-            icon ? FONTS.span : FONTS.p,
-            { color: icon ? COLORS.black : fg },
-          ]}
-        >
-          {label}
-        </Text>
+        {label && (
+          <Text
+            style={[
+              icon ? FONTS.span : FONTS.p,
+              { color: icon ? COLORS.black : fg },
+            ]}
+          >
+            {label}
+          </Text>
+        )}
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
@@ -92,7 +109,7 @@ export default Button;
 
 const styles = StyleSheet.create({
   btn: {
-    width: SIZES.w - SIZES.xl,
+    width: SIZES.w - SIZES.l,
     height: SIZES.m * 2,
     justifyContent: "center",
     alignItems: "center",

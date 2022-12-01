@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "166471730269",
+    "project_id": "banking-app-1",
+    "storage_bucket": "banking-app-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166471730269:android:d82cf55d809781301779b4",
+        "android_client_info": {
+          "package_name": "com.cheikhkante.bankingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "166471730269-feg1ujj75qki94chleidu6jpbc9o4g8h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cheikhkante.bankingapp",
+            "certificate_hash": "c073ff7544b28ee3d8b5b7d816fb03929db96c46"
+          }
+        },
+        {
+          "client_id": "166471730269-vut4otsi4b71it5845jsc80tib5o428u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cheikhkante.bankingapp",
+            "certificate_hash": "5e7ad7ee4e78abd00d2fb6e682238e5af557daa4"
+          }
+        },
+        {
+          "client_id": "166471730269-tcg0stor8ml5km8dpjp5hl0i36lumflb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTlWWyyqS12k0shQh60VogIIP1jhR3ydI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "166471730269-tcg0stor8ml5km8dpjp5hl0i36lumflb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
