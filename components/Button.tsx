@@ -14,46 +14,41 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface Props {
   label?: string;
-  primary?: boolean;
-  secondary?: boolean;
-  disabled?: boolean;
-  outline?: boolean;
   icon?: ImageSourcePropType;
   style?: StyleProp<ViewStyle>;
+  btnType?: "primary" | "secondary" | "disabled" | "outline";
   onPress: () => void;
 }
 
-const Button = ({
-  label,
-  primary,
-  secondary,
-  disabled,
-  outline,
-  icon,
-  style,
-  onPress,
-}: Props) => {
-  const defaultBg = primary
-    ? COLORS.base
-    : secondary
-    ? COLORS.lighter
-    : disabled
-    ? COLORS.lightest
-    : COLORS.white;
-  const fg = primary ? COLORS.white : disabled ? "darkgray" : COLORS.darkest;
+const Button = ({ label, icon, btnType, style, onPress }: Props) => {
+  const defaultBg =
+    btnType == "primary"
+      ? COLORS.base
+      : btnType == "secondary"
+      ? COLORS.lighter
+      : btnType == "disabled"
+      ? COLORS.lightest
+      : COLORS.white;
+  const fg =
+    btnType == "primary"
+      ? COLORS.white
+      : btnType == "disabled"
+      ? "darkgray"
+      : COLORS.darkest;
 
   const [bg, setbg] = React.useState(defaultBg);
-  const border = outline ? 1 : 0;
+  const border = btnType == "outline" ? 1 : 0;
 
   const onPressIn = () => {
-    const updateBg = primary
-      ? COLORS.darkest
-      : secondary
-      ? COLORS.light
-      : outline
-      ? "transparent"
-      : COLORS.lightest;
-    setbg(updateBg);
+    setbg(
+      btnType == "primary"
+        ? COLORS.darkest
+        : btnType == "secondary"
+        ? COLORS.light
+        : btnType == "disabled"
+        ? COLORS.lightest
+        : "transparent"
+    );
   };
 
   const onPressOut = () => {

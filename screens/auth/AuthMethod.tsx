@@ -56,7 +56,7 @@ const AuthMethod = ({ navigation }: Props) => {
         <Text style={FONTS.h5}>Or</Text>
         <View style={styles.separator} />
         <Button
-          primary
+          btnType="primary"
           label="Sign in with password"
           onPress={() => navigation.navigate("SignIn")}
         />

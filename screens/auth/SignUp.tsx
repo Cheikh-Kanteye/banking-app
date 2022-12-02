@@ -80,7 +80,7 @@ const SignUp = ({ navigation }: Props) => {
               </TouchableOpacity>
             </View>
 
-            <Button label="Sign up" onPress={() => null} primary />
+            <Button label="Sign up" onPress={() => null} btnType="primary" />
           </KeyboardAvoidingView>
           <View style={styles.footer}>
             <View />
@@ -100,19 +100,19 @@ const SignUp = ({ navigation }: Props) => {
                 <Button
                   icon={IMAGES.facebook}
                   onPress={() => console.log("continue with facebook")}
-                  outline
+                  btnType="outline"
                   style={{ width: SIZES.xl, marginRight: SIZES.s }}
                 />
                 <Button
                   icon={IMAGES.google}
                   onPress={() => console.log("continue with google")}
-                  outline
+                  btnType="outline"
                   style={{ width: SIZES.xl }}
                 />
                 <Button
                   icon={IMAGES.apple}
                   onPress={() => console.log("continue with apple")}
-                  outline
+                  btnType="outline"
                   style={{ width: SIZES.xl, marginLeft: SIZES.s }}
                 />
               </View>

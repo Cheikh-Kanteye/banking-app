@@ -4,7 +4,10 @@ export type AuthStackParamList = {
   SignIn: undefined;
   SignUp: undefined;
   ForgotPassword: undefined;
-  OTPVerify: undefined;
+  OTPVerify: {
+    resetType: "sms" | "email";
+    credential: string | undefined;
+  };
   ResetPassword: undefined;
 };
 

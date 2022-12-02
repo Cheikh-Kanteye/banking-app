@@ -19,53 +19,8 @@ import { IMAGES } from "../../assets";
 import { ScrollView } from "react-native-gesture-handler";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthStackParamList } from "../../type";
-import { Button } from "../../components";
+import { Button, ResetCard } from "../../components";
 
-interface InputProps {
-  icon: string;
-  label: string | undefined;
-  value: string | undefined;
-  placeholder?: string | undefined;
-  isResetType: boolean;
-  onChangeText: (text: string) => void;
-  selectResetType: () => void;
-}
-
-const Input = ({
-  icon,
-  label,
-  value,
-  placeholder,
-  isResetType,
-  onChangeText,
-  selectResetType,
-}: InputProps) => {
-  return (
-    <TouchableOpacity
-      onPress={selectResetType}
-      style={[
-        styles.inputContainer,
-        { borderColor: isResetType ? COLORS.base : COLORS.grey },
-      ]}
-    >
-      <Ionicons
-        name={icon}
-        size={22}
-        color={isResetType ? COLORS.base : COLORS.grey}
-        style={{ marginRight: SIZES.s }}
-      />
-      <View style={{ flex: 1 }}>
-        <Text style={FONTS.thin}>via {label}:</Text>
-        <TextInput
-          style={styles.input}
-          value={value}
-          onChangeText={onChangeText}
-          placeholder={placeholder}
-        />
-      </View>
-    </TouchableOpacity>
-  );
-};
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "ForgotPassword">;
 }
@@ -103,35 +58,38 @@ const ForgotPassword = ({ navigation }: Props) => {
         <Text style={{ ...FONTS.span, marginBottom: SIZES.s }}>
           Select wich contact detals should we use to reset your password.
         </Text>
-        <Input
+        <ResetCard
           value={`${countryCode} ${phoneNumber}`}
-          onChangeText={setPhoneNumber}
           icon="chatbubble-outline"
           label="SMS"
           isResetType={resetType == "sms"}
           selectResetType={() => setResetType("sms")}
         />
-        <Input
+        <ResetCard
           value={email}
-          onChangeText={setEmail}
           icon="mail-outline"
           label="Email"
           isResetType={resetType == "email"}
           selectResetType={() => setResetType("email")}
         />
         <View style={{ height: 50 }} />
-        <Button label="Continue" onPress={() => null} primary />
+        <Button
+          label="Continue"
+          onPress={() =>
+            navigation.navigate("OTPVerify", {
+              resetType: resetType,
+              credential:
+                resetType == "sms" ? `${countryCode} ${phoneNumber}` : email,
+            })
+          }
+          btnType="primary"
+        />
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 export default ForgotPassword;
-
-const center: StyleProp<ViewStyle> = {
-  justifyContent: "center",
-  alignItems: "center",
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -143,7 +101,7 @@ const styles = StyleSheet.create({
     width: SIZES.w - SIZES.l,
     marginVertical: SIZES.m,
   },
-  inputContainer: {
+  cardContainer: {
     width: SIZES.w - SIZES.l,
     height: SIZES.m * 2,
     borderWidth: 1,
@@ -153,10 +111,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     bordeWidth: 1,
     marginBottom: SIZES.s,
-  },
-  input: {
-    flex: 1,
-    fontSize: 12,
-    fontWeight: "700",
   },
 });

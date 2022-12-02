@@ -93,7 +93,7 @@ const SignIn = ({ navigation }: Props) => {
               </TouchableOpacity>
             </View>
 
-            <Button label="Sign in" onPress={() => null} primary />
+            <Button label="Sign in" onPress={() => null} btnType="primary" />
             <View style={styles.separator} />
             <TouchableOpacity
               onPress={() => navigation.navigate("ForgotPassword")}
