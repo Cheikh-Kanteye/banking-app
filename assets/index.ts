@@ -5,4 +5,5 @@ export const IMAGES = {
   google: require("./images/google.png"),
   apple: require("./images/apple.png"),
   dollard: require("./images/dollard.png"),
+  confirm: require("./images/confirm.png"),
 };

@@ -34,21 +34,21 @@ const AuthMethod = ({ navigation }: Props) => {
         <View style={styles.separator} />
         <Button
           icon={IMAGES.facebook}
-          outline
+          btnType="outline"
           onPress={() => null}
           label="Continue with facebook"
         />
         <View style={styles.separator} />
         <Button
           icon={IMAGES.google}
-          outline
+          btnType="outline"
           onPress={() => null}
           label="Continue with google"
         />
         <View style={styles.separator} />
         <Button
           icon={IMAGES.apple}
-          outline
+          btnType="outline"
           onPress={() => null}
           label="Continue with apple"
         />

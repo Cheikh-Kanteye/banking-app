@@ -42,6 +42,7 @@ const Input = ({ placeholder, value, secure, setValue }: Props) => {
         style={styles.input}
         placeholder={placeholder}
         secureTextEntry={secure && !showPassword}
+        autoCapitalize={"none"}
       />
       {secure && (
         <Feather

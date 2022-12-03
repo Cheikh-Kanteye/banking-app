@@ -1,17 +1,15 @@
 import {
   Keyboard,
-  TouchableWithoutFeedback,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  Pressable,
   KeyboardAvoidingView,
   Platform,
   StyleProp,
   ViewStyle,
 } from "react-native";
-import React, { useReducer, useState } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import { Button, Input } from "../../components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -19,7 +17,7 @@ import { COLORS, FONTS, SIZES } from "../../config";
 import { IMAGES } from "../../assets";
 import { ScrollView } from "react-native-gesture-handler";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { AuthStackParamList } from "../../type";
+import { AuthContextType, AuthStackParamList, AuthContext } from "../../type";
 
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "SignIn">;
@@ -29,6 +27,7 @@ const SignIn = ({ navigation }: Props) => {
   const [email, setEmail] = useState<string | undefined>();
   const [password, setPassword] = useState<string | undefined>();
   const [remindMe, setRemindme] = useReducer((s) => !s, false);
+  const { signIn } = useContext(AuthContext) as AuthContextType;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -93,7 +92,11 @@ const SignIn = ({ navigation }: Props) => {
               </TouchableOpacity>
             </View>
 
-            <Button label="Sign in" onPress={() => null} btnType="primary" />
+            <Button
+              label="Sign in"
+              onPress={() => signIn({ email, password })}
+              btnType="primary"
+            />
             <View style={styles.separator} />
             <TouchableOpacity
               onPress={() => navigation.navigate("ForgotPassword")}
@@ -123,19 +126,19 @@ const SignIn = ({ navigation }: Props) => {
                 <Button
                   icon={IMAGES.facebook}
                   onPress={() => console.log("continue with facebook")}
-                  outline
+                  btnType="outline"
                   style={{ width: SIZES.xl, marginRight: SIZES.s }}
                 />
                 <Button
                   icon={IMAGES.google}
                   onPress={() => console.log("continue with google")}
-                  outline
+                  btnType="outline"
                   style={{ width: SIZES.xl }}
                 />
                 <Button
                   icon={IMAGES.apple}
                   onPress={() => console.log("continue with apple")}
-                  outline
+                  btnType="outline"
                   style={{ width: SIZES.xl, marginLeft: SIZES.s }}
                 />
               </View>
