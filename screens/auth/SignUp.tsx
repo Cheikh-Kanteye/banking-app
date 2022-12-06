@@ -10,6 +10,7 @@ import {
   Platform,
   StyleProp,
   ViewStyle,
+  Alert,
 } from "react-native";
 import React, { useReducer, useState } from "react";
 import { Button, Input } from "../../components";
@@ -20,16 +21,30 @@ import { IMAGES } from "../../assets";
 import { ScrollView } from "react-native-gesture-handler";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthStackParamList } from "../../type";
-
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../../firebase.config";
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "SignUp">;
 }
 
 const SignUp = ({ navigation }: Props) => {
-  const [name, setName] = useState<string | undefined>();
-  const [email, setEmail] = useState<string | undefined>();
-  const [password, setPassword] = useState<string | undefined>();
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [remindMe, setRemindme] = useReducer((s) => !s, false);
+  const signUpWithEmailAndPassword = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        //@ts-ignore
+        updateProfile(user.user, {
+          displayName: name,
+        });
+      })
+      .catch((err) => {
+        Alert.alert(err.message);
+        throw err;
+      });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,7 +62,10 @@ const SignUp = ({ navigation }: Props) => {
           <KeyboardAvoidingView
             behavior={Platform.OS === "android" ? "height" : "padding"}
           >
-            <TouchableOpacity style={{ marginBottom: SIZES.l }}>
+            <TouchableOpacity
+              onPress={navigation.goBack}
+              style={{ marginBottom: SIZES.l }}
+            >
               <Ionicons
                 name="chevron-back-outline"
                 color={COLORS.black}
@@ -80,7 +98,11 @@ const SignUp = ({ navigation }: Props) => {
               </TouchableOpacity>
             </View>
 
-            <Button label="Sign up" onPress={() => null} btnType="primary" />
+            <Button
+              label="Sign up"
+              onPress={signUpWithEmailAndPassword}
+              btnType="primary"
+            />
           </KeyboardAvoidingView>
           <View style={styles.footer}>
             <View />

@@ -1,33 +1,44 @@
+import { StackNavigationProp } from "@react-navigation/stack";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import React, { useReducer, useState } from "react";
 import {
-  Keyboard,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
   KeyboardAvoidingView,
-  Platform,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
   StyleProp,
   ViewStyle,
+  Platform,
+  Keyboard,
+  Alert,
+  Text,
+  View,
 } from "react-native";
-import React, { useContext, useReducer, useState } from "react";
+
+import { auth } from "../../firebase.config";
+import { AuthStackParamList } from "../../type";
 import { Button, Input } from "../../components";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { COLORS, FONTS, SIZES } from "../../config";
 import { IMAGES } from "../../assets";
-import { ScrollView } from "react-native-gesture-handler";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { AuthContextType, AuthStackParamList, AuthContext } from "../../type";
 
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "SignIn">;
 }
 
 const SignIn = ({ navigation }: Props) => {
-  const [email, setEmail] = useState<string | undefined>();
-  const [password, setPassword] = useState<string | undefined>();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [remindMe, setRemindme] = useReducer((s) => !s, false);
-  const { signIn } = useContext(AuthContext) as AuthContextType;
+
+  const signIn = () => {
+    signInWithEmailAndPassword(auth, email, password).catch((error) => {
+      Alert.alert(error.message);
+
+      throw error;
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -92,11 +103,7 @@ const SignIn = ({ navigation }: Props) => {
               </TouchableOpacity>
             </View>
 
-            <Button
-              label="Sign in"
-              onPress={() => signIn({ email, password })}
-              btnType="primary"
-            />
+            <Button label="Sign in" onPress={signIn} btnType="primary" />
             <View style={styles.separator} />
             <TouchableOpacity
               onPress={() => navigation.navigate("ForgotPassword")}

@@ -4,10 +4,10 @@
     "slug": "banking-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,22 +18,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true 
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "googleServicesFile": "./google-services.json",
+        "foregroundImage": "./assets/images/adaptive-icon.png", 
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.cheikhkante.bankingapp"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "@react-native-google-signin/google-signin"
-    ],
+      "favicon": "./assets/images/favicon.png"
+    }, 
     "extra": {
       "eas": {
         "projectId": "5cada499-640b-4b75-864c-6165657d6fbe"

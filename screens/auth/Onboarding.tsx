@@ -5,12 +5,16 @@ import { COLORS, FONTS, SIZES } from "../../config";
 import { Button } from "../../components";
 import { AuthStackParamList } from "../../type";
 import { IMAGES } from "../../assets";
+import { setBackgroundColorAsync } from "expo-navigation-bar";
 
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "Onboarding">;
 }
 
 const Onbarding = ({ navigation }: Props) => {
+  React.useEffect(() => {
+    setBackgroundColorAsync(COLORS.base);
+  }, []);
   return (
     <View style={styles.container}>
       <Image

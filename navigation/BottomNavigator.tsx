@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React, { useEffect } from "react";
 import { Cards, Profile, Statistics } from "../screens";
 import { TabParamList } from "../type";
 import Feather from "react-native-vector-icons/Feather";
@@ -7,10 +8,13 @@ import { COLORS, FONTS } from "../config";
 import { Text } from "react-native";
 import { setBackgroundColorAsync } from "expo-navigation-bar";
 
-setBackgroundColorAsync(COLORS.white);
 const Tab = createBottomTabNavigator<TabParamList>();
 
 const BottomNavigator = () => {
+  useEffect(() => {
+    setBackgroundColorAsync("rgb(255,255,255)");
+  }, []);
+
   return (
     <Tab.Navigator
       screenOptions={{

@@ -13,7 +13,6 @@ import { COLORS, FONTS, SIZES } from "../../config";
 import { IMAGES } from "../../assets";
 import { Button } from "../../components";
 import { AuthStackParamList } from "../../type";
-
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "AuthMethod">;
 }

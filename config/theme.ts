@@ -10,6 +10,7 @@ export const COLORS = {
   black: "#000000",
   greyish: "#dbdbdb",
   grey: "#adb0b2",
+  red: "#dd3c36",
 };
 
 export const FONTS = StyleSheet.create({
