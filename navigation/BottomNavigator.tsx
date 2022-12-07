@@ -7,6 +7,7 @@ import RootNavigator from "./RootNavigator";
 import { COLORS, FONTS } from "../config";
 import { Text } from "react-native";
 import { setBackgroundColorAsync } from "expo-navigation-bar";
+import SettingsNavigator from "./SettingsNavigator";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -92,8 +93,8 @@ const BottomNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="Settings"
+        component={SettingsNavigator}
         options={{
           tabBarIcon: ({ focused }) => (
             <Feather

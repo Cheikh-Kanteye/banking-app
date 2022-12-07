@@ -1,4 +1,10 @@
-import { Keyboard, StyleSheet, TextInput, View } from "react-native";
+import {
+  Keyboard,
+  StyleSheet,
+  TextInput,
+  View,
+  ImageSourcePropType,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import Feather from "react-native-vector-icons/Feather";
 import { COLORS, SIZES } from "../config";
@@ -8,10 +14,19 @@ interface Props {
   placeholder: string;
   value: string | undefined;
   secure?: boolean;
+  icon?: string;
+  iconPressed?: () => void;
   setValue: (text: string) => void;
 }
 
-const Input = ({ placeholder, value, secure, setValue }: Props) => {
+const Input = ({
+  placeholder,
+  value,
+  secure,
+  icon,
+  setValue,
+  iconPressed,
+}: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [focused, setFocused] = useState(false);
 
@@ -54,6 +69,11 @@ const Input = ({ placeholder, value, secure, setValue }: Props) => {
           size={20}
           color={COLORS.grey}
         />
+      )}
+      {icon && (
+        <TouchableOpacity onPress={iconPressed}>
+          <Feather name={icon} size={20} color={COLORS.black} />
+        </TouchableOpacity>
       )}
     </View>
   );

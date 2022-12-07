@@ -10,31 +10,46 @@ import { ProfileImg } from "../../components";
 import { auth } from "../../firebase.config";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { signOut } from "firebase/auth";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { SettingsStackParamList } from "../../type";
+import { RouteProp } from "@react-navigation/native";
 
-const MENU_ITEMS = [
+type MenuTypes = {
+  id: string;
+  label: string;
+  Icon: typeof Ionicons;
+  iconName: typeof Ionicons.name;
+  screen?: string;
+}[];
+
+const MENU_ITEMS: MenuTypes = [
   {
     id: "001",
     label: "Edit Profile",
     Icon: Feather,
     iconName: "user",
+    screen: "EditProfile",
   },
   {
     id: "002",
     label: "Notifications",
     Icon: Feather,
     iconName: "bell",
+    screen: "Notifications",
   },
   {
     id: "003",
     label: "Security",
     Icon: MaterialIcons,
     iconName: "security",
+    screen: "Security",
   },
   {
     id: "004",
-    label: "Langage",
+    label: "Language",
     Icon: Feather,
     iconName: "globe",
+    screen: "Language",
   },
   {
     id: "005",
@@ -47,16 +62,22 @@ const MENU_ITEMS = [
     label: "Help & Support",
     Icon: Feather,
     iconName: "help-circle",
+    screen: "HelpAndSupport",
   },
   {
     id: "007",
     label: "Contact Us",
     Icon: Ionicons,
     iconName: "chatbubble-outline",
+    screen: "ContactUs",
   },
 ];
 
-const Profile = () => {
+interface ProfileProps {
+  navigation: StackNavigationProp<SettingsStackParamList, "Profile">;
+}
+
+const Profile = ({ navigation }: ProfileProps) => {
   const [theme, setTheme] = useState("Dark");
   const [toggled, setToggled] = useState(false);
   const user = auth.currentUser;
@@ -108,7 +129,14 @@ const Profile = () => {
                     : item.label}
                 </Text>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  if (item.screen) {
+                    navigation.navigate(item?.screen as never);
+                  }
+                  return;
+                }}
+              >
                 {item.label == "Theme" ? (
                   <Switch
                     value={toggled}
