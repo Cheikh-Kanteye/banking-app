@@ -21,6 +21,7 @@ const BottomNavigator = () => {
       screenOptions={{
         headerShown: false,
         tabBarStyle: { paddingVertical: 8 },
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Tab.Screen

@@ -14,15 +14,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png", 
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF",
         "resizeMode": "contain"
       },
@@ -30,11 +28,17 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }, 
+    },
     "extra": {
       "eas": {
         "projectId": "5cada499-640b-4b75-864c-6165657d6fbe"
       }
     }
-  }
+  },
+  "plugins": [
+    "expo-image-picker",
+    {
+      "photosPermission": "The app accesses your photos to let you share them with your friends."
+    }
+  ]
 }

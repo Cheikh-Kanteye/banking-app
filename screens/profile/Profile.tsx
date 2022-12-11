@@ -1,18 +1,28 @@
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Platform,
+  Alert,
+} from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView } from "react-native-gesture-handler";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
-import { StyleSheet, Text, View, Pressable, Switch } from "react-native";
-import React, { useState } from "react";
-
-import { COLORS, FONTS, SIZES } from "../../config";
-import { ProfileImg } from "../../components";
-import { auth } from "../../firebase.config";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { signOut } from "firebase/auth";
-import { StackNavigationProp } from "@react-navigation/stack";
+import React, { useState, useEffect } from "react";
+import * as ImagePicker from "expo-image-picker";
+import * as Clipboard from "expo-clipboard";
+import uuid from "uuid";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ProfileImg, Switch } from "../../components";
 import { SettingsStackParamList } from "../../type";
-import { RouteProp } from "@react-navigation/native";
+import { COLORS, FONTS, SIZES } from "../../config";
+import { app, auth } from "../../firebase.config";
+import { signOut, updateProfile } from "firebase/auth";
+import { getUpdateUrl } from "@expo/config-plugins/build/utils/Updates";
 
 type MenuTypes = {
   id: string;
@@ -79,13 +89,89 @@ interface ProfileProps {
 
 const Profile = ({ navigation }: ProfileProps) => {
   const [theme, setTheme] = useState("Dark");
-  const [toggled, setToggled] = useState(false);
+  const [toggledTheme, setToggledTheme] = useState(false);
+  const [toggleSwitch, setToggleSwitch] = useState(false);
+  const [image, setImage] = useState("");
+  const [uploading, setUploading] = useState(false);
   const user = auth.currentUser;
 
-  React.useEffect(() => {
-    setTheme(toggled ? "Light" : "Dark");
-  }, [toggled]);
+  const uploadAsyncImage = async (uri: string) => {
+    const blob: Blob | Uint8Array | ArrayBuffer = await new Promise(
+      (rv, rj) => {
+        const request = new XMLHttpRequest();
+        request.onload = () => {
+          rv(request.response);
+        };
+        request.onerror = () => {
+          rj(new TypeError("Network request failed"));
+        };
+        request.responseType = "blob";
+        request.open("Get", uri, true);
+        request.send(null);
+      }
+    );
 
+    const fileRef = ref(getStorage(app), "images/");
+    const result = await uploadBytes(fileRef, blob);
+
+    blob.slice(0, 1);
+
+    return await getDownloadURL(fileRef);
+  };
+
+  const handleIamegPicked = async (
+    pickerResult: ImagePicker.ImagePickerResult
+  ) => {
+    try {
+      setUploading(true);
+      if (!pickerResult.canceled) {
+        const uploadUrl = await uploadAsyncImage(pickerResult.assets[0].uri);
+        setImage(uploadUrl);
+      }
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Upload file failde :(");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    handleIamegPicked(result);
+  };
+
+  useEffect(() => {
+    async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          Alert.alert(
+            "Sorry, we need camera roll permissions to make this work!"
+          );
+        }
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    //@ts-ignore
+    updateProfile(user, {
+      photoURL: image,
+    });
+  }, [image]);
+
+  useEffect(() => {
+    setTheme(toggledTheme ? "Light" : "Dark");
+  }, [toggledTheme]);
   return (
     <SafeAreaView edges={["top"]} style={styles.container}>
       <View style={styles.header}>
@@ -100,9 +186,9 @@ const Profile = ({ navigation }: ProfileProps) => {
             name={user?.displayName} //@ts-ignore
             photoURL={user?.photoURL}
           />
-          <View style={styles.editBtn}>
+          <TouchableOpacity onPress={pickImage} style={styles.editBtn}>
             <Feather name="edit" color={COLORS.white} size={12} />
-          </View>
+          </TouchableOpacity>
         </View>
         <Text style={[FONTS.h2, { marginTop: SIZES.s, textAlign: "center" }]}>
           {user?.displayName}
@@ -139,8 +225,8 @@ const Profile = ({ navigation }: ProfileProps) => {
               >
                 {item.label == "Theme" ? (
                   <Switch
-                    value={toggled}
-                    onChange={() => setToggled(!toggled)}
+                    onToggle={() => setToggleSwitch(!toggleSwitch)}
+                    toggled={toggleSwitch}
                   />
                 ) : (
                   <Feather name="chevron-right" size={22} />

@@ -9,9 +9,19 @@ export { default as ResetPassword } from "./auth/ResetPassword";
 
 // Root Screens
 export { default as Home } from "./root/Home";
+//Roo -> In & Out Payment Screens
 export { default as InOutPayment } from "./root/InOutPayment";
+//Root -> Request Payment Screens
+export { default as ContactList } from "./root/ContactList";
+export { default as RequestPayment } from "./root/RequestPayment";
+export { default as EReceipt } from "./root/EReceipt";
+
+//Statistics Screens
 export { default as Statistics } from "./statistics/Statistics";
+
+//Cards Screens
 export { default as Cards } from "./cards/Cards";
+
 //Profile Screens
 export { default as Profile } from "./profile/Profile";
 export { default as EditProfile } from "./profile/EditProfile";

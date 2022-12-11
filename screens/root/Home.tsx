@@ -19,7 +19,7 @@ import {
 
 import { COLORS, FONTS, SIZES } from "../../config";
 import { RootStackParamList } from "../../type";
-import { app, auth } from "../../firebase.config";
+import { auth } from "../../firebase.config";
 import { IMAGES } from "../../assets";
 import { ProfileImg, TabBtn } from "../../components";
 
@@ -42,7 +42,7 @@ const nav_tabs: tab_type = [
   {
     id: "002",
     icon: IMAGES.download,
-    label: "requesr",
+    label: "request",
     screen: "Request",
   },
   {

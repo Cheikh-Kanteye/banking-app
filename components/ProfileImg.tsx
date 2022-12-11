@@ -16,7 +16,7 @@ function randomInteger(min: number, max: number) {
 }
 
 interface Props {
-  photoURL: ImageSourcePropType;
+  photoURL: string;
   name: string | null | undefined;
   style?: StyleProp<ViewStyle>;
 }
@@ -27,7 +27,10 @@ const ProfileImg = ({ photoURL, name, style }: Props) => {
       {photoURL ? (
         <View style={[styles.profile, style]}>
           {/* @ts-ignore */}
-          <Image source={{ uri: photoURL }} />
+          <Image
+            source={{ uri: photoURL }}
+            style={StyleSheet.absoluteFillObject}
+          />
         </View>
       ) : (
         <View style={[styles.profile, style]}>
@@ -57,5 +60,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: random_color[randomInteger(0, random_color.length - 1)],
+    overflow: "hidden",
   },
 });

@@ -23,6 +23,12 @@ export type SettingsStackParamList = {
   ContactUs: undefined;
 };
 
+export type RequestStackParamList = {
+  Contact: undefined;
+  RequestPayment: undefined;
+  EReceipt: undefined;
+};
+
 export type RootStackParamList = {
   Home: undefined;
   Transfert: undefined;
