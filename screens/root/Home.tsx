@@ -2,7 +2,6 @@
 // import "intl/locale-data/jsonp/en";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StackNavigationProp } from "@react-navigation/stack";
 import Feather from "react-native-vector-icons/Feather";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
@@ -18,10 +17,13 @@ import {
 } from "react-native";
 
 import { COLORS, FONTS, SIZES } from "../../config";
-import { RootStackParamList } from "../../type";
+import { RootStackParamList, TabParamList } from "../../type";
 import { auth } from "../../firebase.config";
 import { IMAGES } from "../../assets";
 import { ProfileImg, TabBtn } from "../../components";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { CompositeNavigationProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 const servicesContainerWidth = SIZES.w - SIZES.l;
 
@@ -192,7 +194,10 @@ const CircleOverlay = ({
 };
 
 interface Props {
-  navigation: StackNavigationProp<RootStackParamList, "Home">;
+  navigation: CompositeNavigationProp<
+    BottomTabNavigationProp<TabParamList, "Home">,
+    StackNavigationProp<RootStackParamList>
+  >;
 }
 
 const Home = ({ navigation }: Props) => {
@@ -219,7 +224,9 @@ const Home = ({ navigation }: Props) => {
         <View style={{ ...styles.row, justifyContent: "space-between" }}>
           {/* @ts-ignore */}
           <ProfileImg name={user?.displayName} photoURL={user?.photoURL} />
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Notifications")}
+          >
             <Feather name="bell" size={22} />
           </TouchableOpacity>
         </View>

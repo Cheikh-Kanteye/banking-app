@@ -1,14 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useEffect } from "react";
-import { Cards, Profile, Statistics } from "../screens";
+import { Cards, Home, Profile, Statistics } from "../screens";
 import { TabParamList } from "../type";
 import Feather from "react-native-vector-icons/Feather";
-import RootNavigator from "./RootNavigator";
 import { COLORS, FONTS } from "../config";
 import { Text } from "react-native";
 import { setBackgroundColorAsync } from "expo-navigation-bar";
-import SettingsNavigator from "./SettingsNavigator";
-
 const Tab = createBottomTabNavigator<TabParamList>();
 
 const BottomNavigator = () => {
@@ -18,15 +15,20 @@ const BottomNavigator = () => {
 
   return (
     <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: { paddingVertical: 8 },
-        tabBarHideOnKeyboard: true,
+      screenOptions={({ route }) => {
+        return {
+          headerShown: false,
+          tabBarStyle: {
+            paddingVertical: 8,
+            display: "flex",
+          },
+          tabBarHideOnKeyboard: true,
+        };
       }}
     >
       <Tab.Screen
-        name="Root"
-        component={RootNavigator}
+        name="Home"
+        component={Home}
         options={{
           tabBarIcon: ({ focused }) => (
             <Feather
@@ -94,8 +96,8 @@ const BottomNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Settings"
-        component={SettingsNavigator}
+        name="Profile"
+        component={Profile}
         options={{
           tabBarIcon: ({ focused }) => (
             <Feather

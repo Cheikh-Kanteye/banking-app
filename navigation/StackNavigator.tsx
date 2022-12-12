@@ -6,6 +6,7 @@ import AuthNavigator from "./AuthNavigator";
 import BottomNavigator from "./BottomNavigator";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { app } from "../firebase.config";
+import RootNavigator from "./RootNavigator";
 
 const Stack = createStackNavigator<StackParamList>();
 const auth = getAuth(app);
@@ -28,7 +29,7 @@ const StackNavigator = () => {
       {user == null ? (
         <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
       ) : (
-        <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
+        <Stack.Screen name="Root" component={RootNavigator} />
       )}
     </Stack.Navigator>
   );

@@ -14,15 +14,15 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 import React, { useState, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
-import * as Clipboard from "expo-clipboard";
 import uuid from "uuid";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { ProfileImg, Switch } from "../../components";
-import { SettingsStackParamList } from "../../type";
 import { COLORS, FONTS, SIZES } from "../../config";
 import { app, auth } from "../../firebase.config";
 import { signOut, updateProfile } from "firebase/auth";
-import { getUpdateUrl } from "@expo/config-plugins/build/utils/Updates";
+import { RootStackParamList, TabParamList } from "../../type";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { CompositeNavigationProp } from "@react-navigation/native";
 
 type MenuTypes = {
   id: string;
@@ -84,7 +84,10 @@ const MENU_ITEMS: MenuTypes = [
 ];
 
 interface ProfileProps {
-  navigation: StackNavigationProp<SettingsStackParamList, "Profile">;
+  navigation: CompositeNavigationProp<
+    BottomTabNavigationProp<TabParamList, "Profile">,
+    StackNavigationProp<RootStackParamList>
+  >;
 }
 
 const Profile = ({ navigation }: ProfileProps) => {

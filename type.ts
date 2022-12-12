@@ -13,39 +13,43 @@ export type AuthStackParamList = {
   ResetPassword: undefined;
 };
 
-export type SettingsStackParamList = {
-  Profile: undefined;
+export type RootStackParamList = {
+  Tabs: undefined;
+
+  //Home Pages
+  Contact: undefined;
+  Transfert: undefined;
+  Request: undefined;
+  EReceipt: undefined;
+  InOutPayment: undefined;
+  EReceiptDetails: undefined;
+  Notifications: undefined;
+
+  //Cards Pages
+  Cards: undefined;
+  CardDetails: undefined;
+  Refund: undefined;
+  TopUp: undefined;
+
+  //Settings Pages
   EditProfile: undefined;
   Security: undefined;
-  Notifications: undefined;
+  NotificationSettings: undefined;
   Language: undefined;
   HelpAndSupport: undefined;
   ContactUs: undefined;
 };
 
-export type RequestStackParamList = {
-  Contact: undefined;
-  RequestPayment: undefined;
-  EReceipt: undefined;
-};
-
-export type RootStackParamList = {
-  Home: undefined;
-  Transfert: undefined;
-  Request: undefined;
-  InOutPayment: undefined;
-};
-
 export type StackParamList = {
   AuthNavigator: undefined;
-  BottomNavigator: undefined;
+  Root: undefined;
 };
 
 export type TabParamList = {
-  Root: undefined;
+  Home: undefined;
   Statistics: undefined;
   Cards: undefined;
-  Settings: undefined;
+  Profile: undefined;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
