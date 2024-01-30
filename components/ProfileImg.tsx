@@ -26,7 +26,6 @@ const ProfileImg = ({ photoURL, name, style }: Props) => {
     <Pressable>
       {photoURL ? (
         <View style={[styles.profile, style]}>
-          {/* @ts-ignore */}
           <Image
             source={{ uri: photoURL }}
             style={StyleSheet.absoluteFillObject}

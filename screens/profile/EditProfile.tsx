@@ -17,6 +17,7 @@ import {
 
 import { COLORS, FONTS, SIZES } from "../../config";
 import { Button, Input } from "../../components";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const PhoneNumberInput = ({
   value,
@@ -96,7 +97,7 @@ const EditProfile = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS == "android" ? "height" : "padding"}
@@ -216,7 +217,7 @@ const EditProfile = () => {
         <View style={styles.separator} />
         <Button label="Update" onPress={() => null} btnType="primary" />
       </KeyboardAvoidingView>
-    </View>
+    </SafeAreaView>
   );
 };
 

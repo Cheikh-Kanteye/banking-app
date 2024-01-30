@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Platform,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -12,14 +13,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
 import uuid from "uuid";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { ProfileImg, Switch } from "../../components";
 import { COLORS, FONTS, SIZES } from "../../config";
 import { app, auth } from "../../firebase.config";
-import { signOut, updateProfile } from "firebase/auth";
+import { User, signOut, updateProfile } from "firebase/auth";
 import { RootStackParamList, TabParamList } from "../../type";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { CompositeNavigationProp } from "@react-navigation/native";
@@ -99,36 +100,29 @@ const Profile = ({ navigation }: ProfileProps) => {
   const user = auth.currentUser;
 
   const uploadAsyncImage = async (uri: string) => {
-    const blob: Blob | Uint8Array | ArrayBuffer = await new Promise(
-      (rv, rj) => {
-        const request = new XMLHttpRequest();
-        request.onload = () => {
-          rv(request.response);
-        };
-        request.onerror = () => {
-          rj(new TypeError("Network request failed"));
-        };
-        request.responseType = "blob";
-        request.open("Get", uri, true);
-        request.send(null);
-      }
-    );
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
 
-    const fileRef = ref(getStorage(app), "images/");
-    const result = await uploadBytes(fileRef, blob);
+      const fileRef = ref(getStorage(app), "images/");
+      const result = await uploadBytes(fileRef, blob);
+      const downloadUrl = await getDownloadURL(result.ref);
 
-    blob.slice(0, 1);
-
-    return await getDownloadURL(fileRef);
+      return downloadUrl;
+    } catch (error) {
+      console.error("Erreur lors de l'upload de l'image:", error);
+      throw new Error("Une erreur est survenue lors de l'upload de l'image.");
+    }
   };
 
-  const handleIamegPicked = async (
+  const handleImagePicked = async (
     pickerResult: ImagePicker.ImagePickerResult
   ) => {
     try {
       setUploading(true);
       if (!pickerResult.canceled) {
         const uploadUrl = await uploadAsyncImage(pickerResult.assets[0].uri);
+
         setImage(uploadUrl);
       }
     } catch (error) {
@@ -140,7 +134,6 @@ const Profile = ({ navigation }: ProfileProps) => {
   };
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -148,26 +141,28 @@ const Profile = ({ navigation }: ProfileProps) => {
       quality: 1,
     });
 
-    handleIamegPicked(result);
+    handleImagePicked(result);
   };
 
   useEffect(() => {
-    async () => {
+    const requestMediaLibraryPermissions = async () => {
       if (Platform.OS !== "web") {
         const { status } =
           await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== "granted") {
           Alert.alert(
-            "Sorry, we need camera roll permissions to make this work!"
+            "Permissions requises",
+            "Désolé, nous avons besoin des permissions pour accéder à la bibliothèque multimédia."
           );
         }
       }
     };
+
+    requestMediaLibraryPermissions();
   }, []);
 
-  useEffect(() => {
-    //@ts-ignore
-    updateProfile(user, {
+  useLayoutEffect(() => {
+    updateProfile(user as User, {
       photoURL: image,
     });
   }, [image]);
@@ -184,11 +179,17 @@ const Profile = ({ navigation }: ProfileProps) => {
           Profile
         </Text>
         <View style={styles.profile}>
-          <ProfileImg
-            style={styles.profile}
-            name={user?.displayName} //@ts-ignore
-            photoURL={user?.photoURL}
-          />
+          {!uploading ? (
+            <ProfileImg
+              style={styles.profile}
+              name={user?.displayName} //@ts-ignore
+              photoURL={user?.photoURL}
+            />
+          ) : (
+            <View>
+              <ActivityIndicator size={"large"} color={COLORS.base} />
+            </View>
+          )}
           <TouchableOpacity onPress={pickImage} style={styles.editBtn}>
             <Feather name="edit" color={COLORS.white} size={12} />
           </TouchableOpacity>

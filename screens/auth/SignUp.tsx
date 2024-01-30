@@ -1,11 +1,9 @@
 import {
   Keyboard,
-  TouchableWithoutFeedback,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  Pressable,
   KeyboardAvoidingView,
   Platform,
   StyleProp,
@@ -32,10 +30,9 @@ const SignUp = ({ navigation }: Props) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [remindMe, setRemindme] = useReducer((s) => !s, false);
-  const signUpWithEmailAndPassword = () => {
-    createUserWithEmailAndPassword(auth, email, password)
+  const signUpWithEmailAndPassword = async () => {
+    await createUserWithEmailAndPassword(auth, email, password)
       .then((user) => {
-        //@ts-ignore
         updateProfile(user.user, {
           displayName: name,
         });

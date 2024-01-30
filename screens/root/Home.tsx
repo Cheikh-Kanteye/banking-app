@@ -10,14 +10,19 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  Pressable,
   Image,
   Text,
   View,
+  Pressable,
 } from "react-native";
 
 import { COLORS, FONTS, SIZES } from "../../config";
-import { RootStackParamList, TabParamList } from "../../type";
+import {
+  RootStackParamList,
+  TabParamList,
+  nav_tabs,
+  services,
+} from "../../type";
 import { auth } from "../../firebase.config";
 import { IMAGES } from "../../assets";
 import { ProfileImg, TabBtn } from "../../components";
@@ -26,129 +31,6 @@ import { CompositeNavigationProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 
 const servicesContainerWidth = SIZES.w - SIZES.l;
-
-type tab_type = {
-  id: string;
-  icon: ImageSourcePropType;
-  label: string;
-  screen: string;
-}[];
-
-const nav_tabs: tab_type = [
-  {
-    id: "001",
-    icon: IMAGES.send,
-    label: "transfert",
-    screen: "Transfert",
-  },
-  {
-    id: "002",
-    icon: IMAGES.download,
-    label: "request",
-    screen: "Request",
-  },
-  {
-    id: "003",
-    icon: IMAGES.exchange,
-    label: "In & out",
-    screen: "InOutPayment",
-  },
-];
-
-type services_type = {
-  id: string;
-  icon: ImageSourcePropType;
-  label: string;
-  fg: string;
-  bg: string;
-}[];
-
-const services: services_type = [
-  {
-    id: "001",
-    icon: IMAGES.flash,
-    label: "electricity",
-    fg: "#FFB947",
-    bg: "#FFEFD7",
-  },
-  {
-    id: "002",
-    icon: IMAGES.wifi,
-    label: "internet",
-    fg: "#FA6D62",
-    bg: "#FCE9E5",
-  },
-  {
-    id: "003",
-    icon: IMAGES.drop,
-    label: "water",
-    fg: "#63B0F1",
-    bg: "#E3F2FC",
-  },
-  {
-    id: "004",
-    icon: IMAGES.card,
-    label: "e-walet",
-    fg: "#836BFE",
-    bg: "#E6E7FE",
-  },
-  {
-    id: "005",
-    icon: IMAGES.suitcase,
-    label: "assurance",
-    fg: "#50D272",
-    bg: "#DFFFE2",
-  },
-  {
-    id: "006",
-    icon: IMAGES.shop,
-    label: "shopping",
-    fg: "#AB4BB6",
-    bg: "#F3E5F5",
-  },
-  {
-    id: "007",
-    icon: IMAGES.percent,
-    label: "deals",
-    fg: "#F45041",
-    bg: "#F7E4E3",
-  },
-  {
-    id: "008",
-    icon: IMAGES.health,
-    label: "health",
-    fg: "#61C80A",
-    bg: "#F0F6E9",
-  },
-  {
-    id: "009",
-    icon: IMAGES.chart,
-    label: "finance",
-    fg: "#2FBCB3",
-    bg: "#DFF2EF",
-  },
-  {
-    id: "010",
-    icon: IMAGES.cart,
-    label: "order",
-    fg: "#FFC235",
-    bg: "#FEF6E4",
-  },
-  {
-    id: "011",
-    icon: IMAGES.phone,
-    label: "credit",
-    fg: "#23CADD",
-    bg: "#DFF6F8",
-  },
-  {
-    id: "012",
-    icon: IMAGES.tv,
-    label: "tv",
-    fg: "#F45755",
-    bg: "#FCE9E5",
-  },
-];
 
 const Tabs = ({ navigateTo }: { navigateTo: (screen: string) => void }) => {
   return (
@@ -223,7 +105,12 @@ const Home = ({ navigation }: Props) => {
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         <View style={{ ...styles.row, justifyContent: "space-between" }}>
           {/* @ts-ignore */}
-          <ProfileImg name={user?.displayName} photoURL={user?.photoURL} />
+          <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+            <ProfileImg
+              name={user?.displayName}
+              photoURL={user?.photoURL as string}
+            />
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate("Notifications")}
           >
@@ -233,8 +120,8 @@ const Home = ({ navigation }: Props) => {
         <View style={styles.card}>
           <LinearGradient
             colors={[COLORS.darkest, COLORS.light]}
-            // start={[0, 0]}
-            // end={[1, 1]}
+            start={[0, 0]}
+            end={[1, 1]}
             style={{
               flex: 1,
               paddingHorizontal: SIZES.s,

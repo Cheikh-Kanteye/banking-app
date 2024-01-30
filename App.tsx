@@ -1,3 +1,4 @@
+import "expo-dev-client";
 import { setStatusBarStyle } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import LoadAssets from "./config";
